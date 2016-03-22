@@ -1,6 +1,8 @@
+module HW1 where
+
 toDigits :: Integer -> [Integer]
 toDigits n
-    | n >= 0 = map (\c -> read [c]) $ show n
+    | n > 0 = map (\c -> read [c]) $ show n
     | otherwise = []
 
 toDigitsRev :: Integer -> [Integer]
