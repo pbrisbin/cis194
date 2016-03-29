@@ -31,3 +31,11 @@ spec = do
         it "works" $ do
             validate 4012888888881881 `shouldBe` True
             validate 4012888888881882 `shouldBe` False
+
+    describe "hanoi" $ do
+        it "works" $ do
+            hanoi 2 "a" "b" "c" `shouldBe`
+                [ ("a","c")
+                , ("a","b")
+                , ("c","b")
+                ]
