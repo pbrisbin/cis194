@@ -40,3 +40,17 @@ spec = do
                 , LogMessage Info 790 "those long words, and, what's more, I don't believe you do either!' And"
                 , LogMessage Info 3899 "hastily."
                 ]
+
+    describe "whatWentWrong" $ do
+        it "works" $ do
+            messages <- liftIO $ testWhatWentWrong parse whatWentWrong "test/files/error.log"
+            messages `shouldBe`
+                [ "Mustardwatch opened, please close for proper functioning!"
+                , "All backup mustardwatches are busy"
+                , "Depletion of mustard stores detected!"
+                , "Hard drive failure: insufficient mustard"
+                , "Twenty seconds remaining until out-of-mustard condition"
+                , "Ten seconds remaining until out-of-mustard condition"
+                , "Empty mustard reservoir! Attempting to recover..."
+                , "Recovery failed! Initiating shutdown sequence"
+                ]
