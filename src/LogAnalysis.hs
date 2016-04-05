@@ -1,5 +1,6 @@
 module LogAnalysis
-    ( parse
+    ( insert
+    , parse
     , parseMessage
     ) where
 
@@ -10,6 +11,18 @@ import Text.Parsec hiding (Error, parse)
 import Text.Parsec.String
 
 import qualified Text.Parsec as P
+
+insert :: LogMessage -> MessageTree -> MessageTree
+insert _ Leaf = Leaf
+insert (Unknown _) mt = mt
+insert lm (Node lessors pivot greators) =
+    if lmTimeStamp lm < lmTimeStamp pivot
+        then Node (insert lm lessors) pivot greators
+        else Node lessors pivot $ insert lm greators
+
+lmTimeStamp :: LogMessage -> Int
+lmTimeStamp (LogMessage _ ts _) = ts
+lmTimeStamp _ = error "Can't get timestamp of Unknown"
 
 parse :: String -> [LogMessage]
 parse = map parseMessage . lines
