@@ -5,6 +5,7 @@ module LogAnalysis
 
 import Log
 
+import Control.Monad (void)
 import Text.Parsec hiding (Error, parse)
 import Text.Parsec.String
 
@@ -23,7 +24,7 @@ parser = parseError <|> parseWarn <|> parseInfo
 
 parseError :: Parser LogMessage
 parseError = do
-    charField 'E'
+    void $ charField 'E'
 
     LogMessage
         <$> (Error <$> digitField)
@@ -32,7 +33,7 @@ parseError = do
 
 parseWarn :: Parser LogMessage
 parseWarn = do
-    charField 'W'
+    void $ charField 'W'
 
     LogMessage
         <$> pure Warning
@@ -41,7 +42,7 @@ parseWarn = do
 
 parseInfo :: Parser LogMessage
 parseInfo = do
-    charField 'I'
+    void $ charField 'I'
 
     LogMessage
         <$> pure Info
