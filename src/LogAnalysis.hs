@@ -13,7 +13,7 @@ import Text.Parsec.String
 import qualified Text.Parsec as P
 
 insert :: LogMessage -> MessageTree -> MessageTree
-insert _ Leaf = Leaf
+insert x Leaf = Node Leaf x Leaf
 insert (Unknown _) mt = mt
 insert lm (Node lessors pivot greators) =
     if lmTimeStamp lm < lmTimeStamp pivot
