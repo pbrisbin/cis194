@@ -9,7 +9,6 @@ module LogAnalysis
 
 import Log
 
-import Control.Monad (void)
 import Text.Parsec hiding (Error, parse)
 import Text.Parsec.String
 
@@ -67,37 +66,18 @@ parseMessage = either err id . P.parse parser ""
     err _ = Unknown "This is not in the right format"
 
 parser :: Parser LogMessage
-parser = parseError <|> parseWarn <|> parseInfo
+parser = choice
+    [ parseLogLine 'E' $ Error <$> digitField
+    , parseLogLine 'W' $ pure Warning
+    , parseLogLine 'I' $ pure Info
+    ]
 
-parseError :: Parser LogMessage
-parseError = do
-    void $ charField 'E'
-
-    LogMessage
-        <$> (Error <$> digitField)
-        <*> digitField
-        <*> many anyToken
-
-parseWarn :: Parser LogMessage
-parseWarn = do
-    void $ charField 'W'
-
-    LogMessage
-        <$> pure Warning
-        <*> digitField
-        <*> many anyToken
-
-parseInfo :: Parser LogMessage
-parseInfo = do
-    void $ charField 'I'
-
-    LogMessage
-        <$> pure Info
-        <*> digitField
-        <*> many anyToken
-
-charField :: Char -> Parser Char
-charField c = char c <* space
+parseLogLine
+    :: Char               -- ^ Expected leading character
+    -> Parser MessageType -- ^ How to parse the type field
+    -> Parser LogMessage  -- ^ Resulting whole-line parser
+parseLogLine c p = char c >> space >>
+    LogMessage <$> p <*> digitField <*> many anyToken
 
 digitField :: Parser Int
 digitField = read <$> many digit <* space
