@@ -21,7 +21,6 @@ whatWentWrong = map lmMessage
     . build
     . filter ((> 50) . lmSeverity)
     . filter lmIsError
-  where
 
 inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
