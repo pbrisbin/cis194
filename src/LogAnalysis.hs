@@ -30,8 +30,7 @@ inOrder (Node lessors pivot greators) = concat
     ]
 
 build :: [LogMessage] -> MessageTree
-build [] = Leaf
-build (x:xs) = insert x $ build xs
+build = foldr insert Leaf
 
 insert :: LogMessage -> MessageTree -> MessageTree
 insert x Leaf = Node Leaf x Leaf
