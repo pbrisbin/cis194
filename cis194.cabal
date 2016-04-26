@@ -10,6 +10,7 @@ library
   exposed-modules:      HW1
                       , Log
                       , LogAnalysis
+                      , Golf
   build-depends:        base
                       , parsec
 
