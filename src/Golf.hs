@@ -8,13 +8,13 @@ import Data.List (group, sort, transpose)
 
 -- | Return [every, every 2nd, ..., every nth] element in a list
 --
--- 1. Get every nth element in the list use zip and list comprehension
+-- 1. Get every nth element in the list using zipWith and list comprehension
 --   - zipWith [1..] gives us indexed pairs of the source list
 --   - 1-based indexes preserve the conceptual meaning of "nth"
 --   - [x|...] is [x] if the condition's true
 --   - [x|...] is [] otherwise
 --   - ev naturally returns [] when n grows too large
--- 3. If ev returns a non-empty, cons it with recursion on n+1
+-- 3. If ev returns a non-empty value, cons it with recursion on n+1
 --
 skips :: (Eq a, Show a) => [a] -> [[a]]
 skips = go 1
@@ -30,7 +30,7 @@ skips = go 1
 -- | Return every element greater than both its neighbors
 --
 -- 1. Pattern match sets of three elements
--- 2. Store non-first element in an as-pattern
+-- 2. Store non-first elements in an as-pattern
 -- 3. Use list comprehension:
 --   - [y|...] evaluates to [y] if the condition is true
 --   - [y|...] evaluates to [] otherwise
