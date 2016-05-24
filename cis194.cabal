@@ -11,6 +11,7 @@ library
                       , Log
                       , LogAnalysis
                       , Golf
+                      , HW4
   build-depends:        base
                       , parsec
 
@@ -23,3 +24,4 @@ test-suite spec
                       , hspec
                       , cis194
                       , transformers
+                      , QuickCheck
