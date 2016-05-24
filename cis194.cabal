@@ -12,7 +12,11 @@ library
                       , LogAnalysis
                       , Golf
                       , HW4
+                      , ExprT
+                      , Parser
+                      , Calc
   build-depends:        base
+                      , containers
                       , parsec
 
 test-suite spec
